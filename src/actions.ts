@@ -1,7 +1,5 @@
 'use server'
 
-import { addWord } from "./db"
-import { auth } from '@clerk/nextjs/server';
 import { revalidatePath } from "next/cache"
 
 export async function createWordAction(prevState: any, formData: any) {
@@ -12,17 +10,9 @@ export async function createWordAction(prevState: any, formData: any) {
     return { message: 'Word cannot be empty.' }
   }
 
-  const { userId } = auth()
+  // TODO add word
 
-  if (!userId) {
-    return { message: 'You must be signed in.' }
-  }
 
-  addWord(userId, wordText)
   revalidatePath("/words")
   return { message: '' }
-}
-
-export async function deleteWords() {
-
 }
